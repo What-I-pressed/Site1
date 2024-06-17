@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boba</title>
+    <!--    <link rel="stylesheet" href="/css/site.css">-->
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/site.js"></script>
+</head>
+<body>
+    <script>loadDOM("/partials/header.html")</script>
+
+
+    <main class="my-container">
+        <h1 class="my-center">Fashion</h1>
+        <button id="btn_add" class="btn btn-secondary">Додати користувача</button>
+        <table class="my-table add-margin" id="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Фото</th>
+                    <th>ПІБ</th>
+                    <th>Пошта</th>
+                    <th>Телефон</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>
+                        <img src="/images/user7.jpg" alt="Labrador Retrievers" width="100">
+                    </td>
+                    <td>Labrador Retrievers</td>
+                    <td>labrador@gmail.com</td>
+                    <td>+38 098 234 45 32</td>
+                </tr>
+
+                <tr>
+                    <td>2</td>
+                    <td>
+                        <img src="/images/user8.jpg" alt="German Shepherds" width="100">
+                    </td>
+                    <td>German Shepherds</td>
+                    <td>german@gmail.com</td>
+                    <td>+38 098 209 45 32</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">
+            Add user
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Додати користувача</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <form class="offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xxl-3 col-xxl-6 needs-validation" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="firstName" class="form-label">Ім'я</label>
+                                            <input type="text" class="form-control" id="firstName" required>
+                                            <div class="invalid-feedback">
+                                                Вкажіть ім'я
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="lastName" class="form-label">Прізвище</label>
+                                            <input type="text" class="form-control" id="lastName" required>
+                                            <div class="invalid-feedback">
+                                                Вкажіть прізвище
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="phone" class="form-label">Телефон</label>
+                                            <input type="text" class="form-control" id="phone" required>
+                                            <div class="invalid-feedback">
+                                                Вкажіть телефон
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Пошта</label>
+                                            <input type="email" class="form-control" id="email" required>
+                                            <div class="invalid-feedback">
+                                                Вкажіть пошту
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3 d-flex align-items-center">
+                                    <div class="col-md-3">
+                                        <img class="img-fluid rounded-circle" src="/images/user.jpg" id="userPreview" alt="фото">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="">
+                                            <label for="userFile" class="form-label">Оберіть фото</label>
+                                            <input class="form-control" type="file" id="userFile" required>
+                                            <div class="invalid-feedback">
+                                                Оберіть фото
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" required>
+                                    <div class="invalid-feedback">
+                                        Вкажіть пароль
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center ">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnClose">Закрити</button>
+                            <button type="submit" class="btn btn-primary me-2" id="btnAdd" >Додати</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+</body>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    var modal = document.getElementById("modal");
+    var btnClose = document.getElementById("btnClose");
+    var btnAdd = document.getElementById("btnAdd");
+
+var fileUrl = "";
+
+const forms = document.querySelectorAll('.needs-validation');
+
+const userFile = document.getElementById("userFile");
+const userPreview = document.getElementById("userPreview");
+
+    btnAdd.onclick = function () {
+        if (document.getElementById("firstName").value.trim() != "" && document.getElementById("lastName").value.trim() != "" &&
+            document.getElementById("email").value.trim() != "" && document.getElementById("phone").value.trim() != "" &&
+            fileUrl.trim() != "") {
+            var table = document.getElementById("table");
+
+            var row = table.insertRow(table.childElementCount + 1);
+
+            var cell0 = row.insertCell(0);
+            var cell1 = row.insertCell(1);
+            var cell2 = row.insertCell(2);
+            var cell3 = row.insertCell(3);
+            var cell4 = row.insertCell(4);
+
+            cell0.innerHTML = "<p>" + (table.rows.length - 1) + "</p>";
+            cell1.innerHTML = "<img src= '" + fileUrl + "' width=100>";
+            cell2.innerHTML = document.getElementById("firstName").value + " " + document.getElementById("lastName").value;
+            cell3.innerHTML = document.getElementById("email").value;
+            cell4.innerHTML = document.getElementById("phone").value;
+            btnClose.click();
+        }
+        
+    }
+
+
+    
+       
+        userFile.addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.type.startsWith('image/')) {
+                    userPreview.src = URL.createObjectURL(file);
+                    fileUrl = userPreview.src;
+                }
+                else {
+                    alert("Тип файлу має бути зображення");
+                    userPreview.src = "/images/user.jpg";
+                    userFile.value = ""; //скидаємо стан інтупа
+                }
+            }
+            else {
+                alert("Оберіть файл!");
+            }
+        });
+    
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+</script>
+
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+</html>
+
+
+
+
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boba</title>-->
+<!--    <link rel="stylesheet" href="/css/site.css">-->
+<!--<link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<body>
+    <h1>Салон краси--</h1>-->
+<!--        <img src="/images/woman.jpg" alt="Жінка" width="800" />-->
+<!--<table class="my-table" id="userTable">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Фото</th>
+            <th>ПІБ</th>
+            <th>Пошта</th>
+            <th>Телефон</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>
+                <img src="/Images/user5.jpg" alt="Labrador Retrievers" width="100">
+            </td>
+            <td>Labrador Retrievers</td>
+            <td>labrador@gmail.com</td>
+            <td>+38 098 234 45 32</td>
+        </tr>
+    </tbody>
+</table>
+<button type="button" class="btn btn-primary" id="btnAdd">Add</button>-->
+<!--<div class="modal fade" id="backdrop" tabindex="-1" aria-hidden="true">-->
+<!--<dialog class="dialog" id="modal-dialog">
+    <div class="dialog--content" id="dialog-content">
+        <h2 class="dialog--heading">It's nice to see you!</h2>
+        <div>
+            <label for="txtEmail">Email:</label>
+            <input type="text" id="txtEmail" name="textbox">
+        </div>
+
+        <div>
+            <label for="txtPhoneNumber">Phone number:</label>
+            <input type="text" id="txtPhoneNumber" name="textbox">
+        </div>
+
+        <div>
+            <label for="txtImageUrl">Image url:</label>
+            <input type="text" id="txtImageUrl" name="textbox">
+        </div>
+
+        <div>
+            <label for="txtFullName">Full Name:</label>
+            <input type="text" id="txtFullName" name="textbox">
+        </div>
+    </div>
+    <div class="dialog--actions-row">
+        <button class="button" type="button" id="btnClose">
+            Close
+        </button>
+        <button class="button" type="button" id="btnSave">Save</button>
+    </div>
+</dialog>
+<script src="/js/index.js"></script>-->
+<!--</div>-->
+<!--</body>
+</html>-->

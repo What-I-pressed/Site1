@@ -1,0 +1,39 @@
+$border-color: #315ba8;
+$background-color: #8ca4a8;
+
+.my-container {
+    padding: 0;
+    margin: auto;
+    width: 1280px;
+
+    .my-center {
+        text-align: center;
+    }
+}
+
+add-margin {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.my-table {
+    //border: solid 1px $border-color;
+    width: 100%;
+    border-collapse: collapse;
+    border-color: #dee2e6;
+    border-spacing: 2px;
+    margin-bottom: 20px;
+
+    thead {
+        th {
+            font-weight: bold;
+        }
+    }
+
+    th, td {
+        text-align: left;
+        padding: .5rem;
+        border: #dee2e6 solid 0;
+        border-bottom-width: 1px;
+    }
+}

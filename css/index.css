@@ -1,0 +1,32 @@
+.my-container {
+  padding: 0;
+  margin: auto;
+  width: 1280px;
+}
+.my-container .my-center {
+  text-align: center;
+}
+
+add-margin {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.my-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-color: #dee2e6;
+  border-spacing: 2px;
+  margin-bottom: 20px;
+}
+.my-table thead th {
+  font-weight: bold;
+}
+.my-table th, .my-table td {
+  text-align: left;
+  padding: 0.5rem;
+  border: #dee2e6 solid 0;
+  border-bottom-width: 1px;
+}
+
+/*# sourceMappingURL=index.css.map */
