@@ -1,0 +1,8 @@
+trButton {
+  transition: background-color 0.3s;
+}
+
+tr:hover {
+  cursor: pointer;
+  background-color: #f1f1f1; /* Optional: Change color on hover directly with CSS */
+}

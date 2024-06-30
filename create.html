@@ -8,12 +8,43 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/site.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/site.js"></script>
 </head>
 <body>
+    <script src="/js/loadDOM.js"></script>
     <script>loadDOM("/partials/header.html")</script>
-    <main class="container">
-        
+    <div class="row"></div>
+    <div class="row topMargin">
+    <div class="col-md-6">
+        <div class="mb-3">
+            <label for="GRN" class="form-label">Гривні</label>
+            <input type="text"  id="GRN">
+            <!--<div class="invalid-feedback">
+                Вкажіть назву
+            </div>-->
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="mb-3">
+            <!--<label for="EUR">Євро: </label>-->
+            <p id="EUR"></p>
+            <!--<div class="invalid-feedback">
+                Вкажіть прізвище
+            </div>-->
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <!--<main class="container">
+
         <h1 class="text-center">Додати користувача</h1>
         <div class="row">
             <form class="offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xxl-3 col-xxl-6 needs-validation" novalidate>
@@ -69,13 +100,35 @@
                     <a href="/" class="btn btn-secondary">Скасувать</a>
                 </div>
             </form>
-        </div>
+        </div>-->
 
 
 
-    </main>
+    <!--</main>-->
 </body>
 
 <script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/axios.min.js"></script>
+
+<script>
+    var server = "http://api.privatbank.ua/p24api/pubinfo?exchange";
+    var dicExchange = {};
+    axios.get(server)
+        .then(resp => {
+            alert(20);
+            // console.log("Server result", resp);
+            const { data } = resp;
+            alert(data);
+            data.forEach(currency => {
+                alert(currency.ccy);
+                dicExchange[currency.ccy] = currency.sale;
+                // if(category.imagePath==null) {
+                //     console.log("image path == null", category.imagePath);
+                // }
+                // console.log("item", category);
+            });
+            document.getElementById("GRN").value = dicExchange["EUR"];
+        });
+</script>
 
 </html>
