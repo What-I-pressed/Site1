@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="/css/converter.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <script src="/js/loadDOM.js"></script>
+    <script>loadDOM("/partials/header.html")</script>
+
+    <div class="converter">
+        <h1 class="mb-4">Currency Converter</h1>
+        <div class="row">
+            <div class="col-5 input-container">
+                <div class="row mt-2 mb-2 align-items-center">
+                    <input class="col-7 me-2 ms-1" type="number" id="amount" placeholder="Amount">
+                    <select class="col-4 right select-box" id="from-currency"></select>
+                </div>
+
+            </div>
+            <div class="col-2">
+                <button class="mt-4 reverse" id="btnReverse"><i class="fas fa-exchange-alt icon"></i></button>
+            </div>
+            <div class="col-5 output-container">
+                <div class="row align-items-center mt-2 mb-2">
+                    <select class="col-4 ms-1 me-2 left select-box" id="to-currency"></select>
+                    <p class="col-7 mt-3 right" id="par"></p>
+                </div>
+
+            </div>
+            <button class="mt-4" onclick="convertCurrency()">Convert</button>
+            <div id="result"></div>
+        </div>
+
+
+    </div>
+</body>
+
+<script src="./js/axios.min.js"></script>
+
+<script>
+    const fromCurrency = document.getElementById('from-currency');
+    const toCurrency = document.getElementById('to-currency');
+    const par = document.getElementById("par");
+    var iAmount = document.getElementById('amount');
+    const btnReverse = document.getElementById("btnReverse");
+    btnReverse.addEventListener("click", reverse)
+
+    const apiUrl = `https://api.allorigins.win/get?url=http://api.privatbank.ua/p24api/pubinfo?exchange=&coursid=5`;
+    //var dicCurrency = {};
+
+    iAmount.value = 100;
+
+    axios.get(apiUrl)
+        .then(resp => {
+            const { contents } = resp.data;
+            const currencyData = JSON.parse(contents);
+            currencyData.forEach(currency => {
+                //dicCurrency[currency["ccy"]] = { buy: currency["buy"], sale: currency["sale"] };
+
+                const option1 = document.createElement('option');
+                option1.value = currency["sale"];
+                option1.textContent = currency["ccy"];
+                fromCurrency.appendChild(option1);
+
+                const option2 = document.createElement('option');
+                option2.value = currency["buy"];
+                option2.textContent = currency["ccy"];
+                toCurrency.appendChild(option2);
+            });
+            const option1 = document.createElement('option');
+            option1.value = 1;
+            option1.textContent = "UAH";
+            fromCurrency.appendChild(option1);
+
+            const option2 = document.createElement('option');
+            option2.value = 1;
+            option2.textContent = "UAH";
+            toCurrency.appendChild(option2);
+
+            toCurrency.selectedIndex = 2;
+            fromCurrency.selectedIndex = 1;
+        });
+
+    async function convertCurrency() {
+        const amount = iAmount.value; 
+
+        const priceInUAH = amount * fromCurrency.value;
+        const priceInCurrency = priceInUAH / toCurrency.value;
+        par.innerText = priceInCurrency.toFixed(2).toString() + " " + toCurrency[toCurrency.selectedIndex].textContent;
+
+    }
+
+    function preventSameSelection() {
+        var options1 = fromCurrency.options;
+        var options2 = toCurrency.options;
+
+        var value1 = fromCurrency[fromCurrency.selectedIndex].textContent;
+        var value2 = toCurrency[toCurrency.selectedIndex].textContent;
+
+        // Iterate over the options in select1 and enable/disable based on select2's value
+        for (var i = 0; i < options1.length; i++) {
+            options1[i].disabled = options1[i].textContent === value2;
+        }
+
+        // Iterate over the options in select2 and enable/disable based on select1's value
+        for (var j = 0; j < options2.length; j++) {
+            options2[j].disabled = options2[j].textContent === value1;
+        }
+    }
+    fromCurrency.addEventListener('change', preventSameSelection);
+    toCurrency.addEventListener('change', preventSameSelection);
+
+    function reverse() {
+        var temp = fromCurrency.selectedIndex;
+        fromCurrency.selectedIndex = toCurrency.selectedIndex;
+        toCurrency.selectedIndex = temp;
+
+        convertCurrency();
+    }
+
+
+</script>
+</html>
